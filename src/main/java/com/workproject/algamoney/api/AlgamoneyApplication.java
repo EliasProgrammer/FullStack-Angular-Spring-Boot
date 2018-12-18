@@ -1,13 +1,13 @@
-package com.workproject.fullStackangularspringboot;
+package com.workproject.algamoney.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FullStackAngularSpringBootApplication {
+public class AlgamoneyApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FullStackAngularSpringBootApplication.class, args);
+		SpringApplication.run(AlgamoneyApplication.class, args);
 	}
 
 }

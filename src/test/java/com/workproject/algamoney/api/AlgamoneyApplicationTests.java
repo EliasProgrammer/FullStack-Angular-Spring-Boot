@@ -1,4 +1,4 @@
-package com.workproject.fullStackangularspringboot;
+package com.workproject.algamoney.api;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class FullStackAngularSpringBootApplicationTests {
+public class AlgamoneyApplicationTests {
 
 	@Test
 	public void contextLoads() {
