@@ -9,17 +9,17 @@ public class ValidationError extends StandardErro {
 	 */
 	private static final long serialVersionUID = 8495329944317601331L;
 	
-	private List<FieldMessage> errors = new ArrayList<>();
+	private List<String> errors = new ArrayList<>();
 	
 	public ValidationError(Integer status, String error, String menssage, String path) {
 		super(status, error, menssage, path);
 	}
 
-	public List<FieldMessage> getErrors() {
+	public List<String> getErrors() {
 		return errors;
 	}
-	public void addError(String campo, String mensagem) {
-		this.errors.add(new FieldMessage(campo, mensagem));
+	public void addError(String mensagem) {
+		this.errors.add(mensagem);
 	}
 	
 	
