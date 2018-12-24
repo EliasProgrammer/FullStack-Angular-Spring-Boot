@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -35,10 +36,10 @@ public class ResourceExceptionHandler {
 	}
 
 	/**
-	 * Manipula a exceção {@code ObjectNotFoundException} quando lançada
+	 * Manipula a exceção {@code ObjectNotFoundException, EmptyResultDataAccessException} quando lançada
 	 */
-	@ExceptionHandler(ObjectNotFoundException.class)
-	public ResponseEntity<StandardErro> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
+	@ExceptionHandler({ObjectNotFoundException.class, EmptyResultDataAccessException.class})
+	public ResponseEntity<StandardErro> objectNotFound(RuntimeException e,  HttpServletRequest request) {
 		HttpStatus status = HttpStatus.NOT_FOUND;
 
 		return ResponseEntity.status(status).build();
@@ -75,9 +76,8 @@ public class ResourceExceptionHandler {
 		}
 
 		return ResponseEntity.status(status).body(err);
-
 	}
-
+	
 	/**
 	 * Método cria Erro padrão de retorno.
 	 * @param e
