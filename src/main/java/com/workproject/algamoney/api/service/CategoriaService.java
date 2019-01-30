@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.workproject.algamoney.api.model.Categoria;
 import com.workproject.algamoney.api.repository.CategoriaRepository;
-import com.workproject.algamoney.api.service.exception.ObjectNotFoundException;
+import com.workproject.algamoney.api.utils.ValidationUtils;
 
 @Service
 public class CategoriaService {
@@ -26,6 +26,6 @@ public class CategoriaService {
 
 	public Categoria findById(Long codigo) {
 		Optional<Categoria> usr = repo.findById(codigo);
-		return usr.orElseThrow(() -> new ObjectNotFoundException());
+		return ValidationUtils.validaNullObject(usr);
 	}
 }
