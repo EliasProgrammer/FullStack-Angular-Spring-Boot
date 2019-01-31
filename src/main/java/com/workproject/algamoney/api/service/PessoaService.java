@@ -35,9 +35,19 @@ public class PessoaService {
 	}
 
 	public Pessoa atualizar(Long codigo, Pessoa pessoa) {
-		Pessoa pessoaSalva = ValidationUtils.validaNullObject(repo.findById(codigo));
+		Pessoa pessoaSalva = buscarPessoa(codigo);
 		BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo");
 		return repo.save(pessoaSalva);
+	}
+
+	public void atualizarPropriedadeAtivo(Long codigo, Boolean ativo) {
+		Pessoa pessoaSalva = buscarPessoa(codigo);
+		pessoaSalva.setAtivo(ativo);
+		repo.save(pessoaSalva);
+	}
+	
+	private Pessoa buscarPessoa(Long codigo) {
+		return ValidationUtils.validaNullObject(repo.findById(codigo));
 	}
 	
 	
