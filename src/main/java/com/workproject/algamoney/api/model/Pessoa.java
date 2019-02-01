@@ -1,5 +1,7 @@
 package com.workproject.algamoney.api.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +12,13 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="pessoa")
-public class Pessoa {
+public class Pessoa implements Serializable{
 	
+	/**
+	 * Serial
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long codigo;
