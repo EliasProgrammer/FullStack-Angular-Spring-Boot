@@ -46,7 +46,7 @@ public class PessoaService {
 		repo.save(pessoaSalva);
 	}
 	
-	private Pessoa buscarPessoa(Long codigo) {
+	public Pessoa buscarPessoa(Long codigo) {
 		return ValidationUtils.validaNullObject(repo.findById(codigo));
 	}
 	

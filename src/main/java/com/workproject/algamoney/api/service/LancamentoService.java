@@ -1,19 +1,26 @@
 package com.workproject.algamoney.api.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.workproject.algamoney.api.model.Lancamento;
+import com.workproject.algamoney.api.model.Pessoa;
 import com.workproject.algamoney.api.repository.LancamentoRepository;
+import com.workproject.algamoney.api.repository.PessoaRepository;
+import com.workproject.algamoney.api.service.exception.PessoaInativaOuInexistenteException;
 import com.workproject.algamoney.api.utils.ValidationUtils;
 
 @Service
 public class LancamentoService {
 	
 	@Autowired
-	private LancamentoRepository repo;
+	private LancamentoRepository repo; 
+	
+	@Autowired
+	private PessoaRepository pessoaRepo;
 	
 	public List<Lancamento> listar(){
 		return repo.findAll();
@@ -24,6 +31,11 @@ public class LancamentoService {
 	}
 
 	public Lancamento criar(Lancamento lancamento) {
+		Optional<Pessoa> pessoa = pessoaRepo.findById(lancamento.getPessoa().getCodigo());
+		
+		if(pessoa.get() == null || pessoa.get().isInativo()) {
+			throw new PessoaInativaOuInexistenteException();
+		}
 		return repo.save(lancamento);
 	}
 

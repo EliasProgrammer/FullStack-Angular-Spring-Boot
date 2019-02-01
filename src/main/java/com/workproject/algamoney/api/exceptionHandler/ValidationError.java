@@ -1,4 +1,4 @@
-package com.workproject.algamoney.api.resource.exception;
+package com.workproject.algamoney.api.exceptionHandler;
 
 import java.util.ArrayList;
 import java.util.List;

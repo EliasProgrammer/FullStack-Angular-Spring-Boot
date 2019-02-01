@@ -1,11 +1,13 @@
-package com.workproject.algamoney.api.resource.exception;
+package com.workproject.algamoney.api.exceptionHandler;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,11 +74,21 @@ public class ResourceExceptionHandler {
 				this.mensagemCampoInvalido, request.getRequestURI());
 
 		for (FieldError error : e.getBindingResult().getFieldErrors()) {
-			err.addError(messageSource.getMessage(error, LocaleContextHolder.getLocale()));
+			err.addError(this.messageSource.getMessage(error, LocaleContextHolder.getLocale()));
 		}
 
 		return ResponseEntity.status(status).body(err);
 	}
+	
+	
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<StandardErro> erroFKBD(DataIntegrityViolationException ex, HttpServletRequest request){
+		String mensagem = this.messageSource.getMessage("campos.fk.invalidos", null, LocaleContextHolder.getLocale());
+		
+		return standardErroReturn(ex, request, HttpStatus.BAD_REQUEST, mensagem);
+	}
+	
+	
 	
 	/**
 	 * Método cria Erro padrão de retorno.
@@ -86,9 +98,9 @@ public class ResourceExceptionHandler {
 	 * @param mensagem
 	 * @return
 	 */
-	private ResponseEntity<StandardErro> standardErroReturn(HttpMessageNotReadableException e, HttpServletRequest request,
+	private ResponseEntity<StandardErro> standardErroReturn(Throwable e, HttpServletRequest request,
 			HttpStatus status, String mensagem) {
-		StandardErro err = new StandardErro(status.value(), e.getMessage(), mensagem, request.getRequestURI());
+		StandardErro err = new StandardErro(status.value(), ExceptionUtils.getRootCauseMessage(e), mensagem, request.getRequestURI());
 
 		return ResponseEntity.status(status).body(err);
 	}
