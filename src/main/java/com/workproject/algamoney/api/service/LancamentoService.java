@@ -10,6 +10,7 @@ import com.workproject.algamoney.api.model.Lancamento;
 import com.workproject.algamoney.api.model.Pessoa;
 import com.workproject.algamoney.api.repository.LancamentoRepository;
 import com.workproject.algamoney.api.repository.PessoaRepository;
+import com.workproject.algamoney.api.repository.filter.LancamentoFilter;
 import com.workproject.algamoney.api.service.exception.PessoaInativaOuInexistenteException;
 import com.workproject.algamoney.api.utils.ValidationUtils;
 
@@ -22,8 +23,8 @@ public class LancamentoService {
 	@Autowired
 	private PessoaRepository pessoaRepo;
 	
-	public List<Lancamento> listar(){
-		return repo.findAll();
+	public List<Lancamento> pesquisar(LancamentoFilter lancamentoFilter){
+		return repo.filtrar(lancamentoFilter);
 	}
 
 	public Lancamento listarPorId(Long codigo) {
