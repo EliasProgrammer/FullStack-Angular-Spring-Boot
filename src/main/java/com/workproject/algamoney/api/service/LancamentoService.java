@@ -1,9 +1,10 @@
 package com.workproject.algamoney.api.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.workproject.algamoney.api.model.Lancamento;
@@ -23,8 +24,8 @@ public class LancamentoService {
 	@Autowired
 	private PessoaRepository pessoaRepo;
 	
-	public List<Lancamento> pesquisar(LancamentoFilter lancamentoFilter){
-		return repo.filtrar(lancamentoFilter);
+	public Page<Lancamento> pesquisar(LancamentoFilter lancamentoFilter, Pageable pageable){
+		return repo.filtrar(lancamentoFilter, pageable);
 	}
 
 	public Lancamento listarPorId(Long codigo) {
