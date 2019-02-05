@@ -40,4 +40,9 @@ public class LancamentoService {
 		return repo.save(lancamento);
 	}
 
+	public void delete(Long codigo) {
+		Lancamento lancamento = listarPorId(codigo);
+		repo.delete(lancamento);
+	}
+
 }
